@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookingWithchii</title>
+
+    <!-- Favicon / Logo Tab Browser -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f8e8ff 0%, #e8d5f2 100%);
+            color: #4a2c5c;
+        }
+
+        .orchid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm0 15c-3 0-5-2-5-5s2-5 5-5 5 2 5 5-2 5-5 5z' fill='%238b5fb8' fill-opacity='0.4'/%3E%3C/svg%3E");
+        }
+
+        header {
+            background: linear-gradient(135deg, #9b6bc7 0%, #c084fc 100%);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(155, 107, 199, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '🌸';
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.1;
+            top: -20px;
+            left: 20px;
+        }
+
+        header::after {
+            content: '🌸';
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.1;
+            bottom: -20px;
+            right: 20px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            color: #f3e8ff;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        nav {
+            background: rgba(155, 107, 199, 0.2);
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(155, 107, 199, 0.2);
+        }
+
+        nav a {
+            color: #6b2c91;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            background: rgba(155, 107, 199, 0.3);
+            color: #8b5fb8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(155, 107, 199, 0.15);
+            border: 3px solid #e9d5ff;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #9b6bc7, #c084fc);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #5a3470;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #e9d5ff;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(155, 107, 199, 0.3);
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-name {
+            color: #7c3aed;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: #9b6bc7;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .product-desc {
+            color: #6b5280;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+
+        .order-form {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #6b2c91;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9d5ff;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: #faf5ff;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #9b6bc7;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(155, 107, 199, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-order {
+            background: linear-gradient(135deg, #9b6bc7 0%, #c084fc 100%);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(155, 107, 199, 0.4);
+        }
+
+        .btn-order:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(155, 107, 199, 0.6);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #6b2c91 0%, #9b6bc7 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="orchid-pattern"></div>
+
+    <header>
+        <h1>🌸 CookingWithchii 🌸</h1>
+        <p class="tagline">Makanan enak resep spesial by: Raden Adisti</p>
+    </header>
+
+    <nav>
+        <a href="#tentang">Tentang Kami</a>
+        <a href="#produk">Menu</a>
+        <a href="#pesan">Pesan Sekarang</a>
+        <a href="#kontak">Kontak</a>
+    </nav>
+
+    <div class="container">
+        <section id="tentang">
+            <h2>Tentang Kami</h2>
+            <div class="about-content">
+                <p>Selamat datang di <strong>CookingWithchii</strong>! 🌸</p>
+                <p style="margin-top: 1rem;">Kami menyajikan Makanan enak yang dibuat dengan penuh cinta setiap hari.
+                    Setiap gigitan Produk Makanan kami membawa kelembutan dan keindahan. Dengan berbagai varian rasa
+                    yang menggugah selera, kami siap memanjakan lidah Anda dan keluarga!</p>
+                <p style="margin-top: 1rem;">Dibuat dari bahan-bahan berkualitas dan resep spesial, Produk kami adalah
+                    pilihan sempurna untuk sarapan, camilan, atau hadiah istimewa.</p>
+            </div>
+        </section>
+
+        <section id="produk">
+            <h2>Menu Kami</h2>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-icon">🍩</div>
+                    <div class="product-name">Paha Ayam Cokelat Ceres (Isi 5)</div>
+                    <div class="product-price">Rp 25.000</div>
+                    <p class="product-desc">
+                        Roti paha ayam lembut dengan balutan cokelat premium dan taburan meses Ceres yang melimpah.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">🧈</div>
+                    <div class="product-name">Paha Ayam Butter Ceres (Isi 5)</div>
+                    <div class="product-price">Rp 25.000</div>
+                    <p class="product-desc">
+                        Perpaduan gurihnya butter pilihan dengan manisnya meses Ceres di atas roti paha ayam yang empuk.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">☕</div>
+                    <div class="product-name">Paha Ayam Moca Ceres (Isi 5)</div>
+                    <div class="product-price">Rp 25.000</div>
+                    <p class="product-desc">
+                        Aroma moka khas berpadu sempurna dengan butiran meses Ceres, isi 5 pcs dalam satu paket.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">☕🧈🍩</div>
+                    <div class="product-name">Mix (Isi 5)</div>
+                    <div class="product-price">Rp 25.000</div>
+                    <p class="product-desc">
+                        Aroma moka khas berpadu sempurna dengan butiran meses Ceres, isi 5 pcs dalam satu paket.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">🍩</div>
+                    <div class="product-name">Paha Ayam Cokelat Ceres (Isi 10)</div>
+                    <div class="product-price">Rp 45.000</div>
+                    <p class="product-desc">
+                        Paket hemat isi 10 pcs roti paha ayam cokelat meses Ceres, cocok dinikmati bersama keluarga.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">🧈</div>
+                    <div class="product-name">Paha Ayam Butter Ceres (Isi 10)</div>
+                    <div class="product-price">Rp 45.000</div>
+                    <p class="product-desc">
+                        Nikmati kelezatan butter dan Ceres dalam porsi lebih besar, lebih puas dan lebih hemat.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">☕</div>
+                    <div class="product-name">Paha Ayam Moca Ceres (Isi 10)</div>
+                    <div class="product-price">Rp 45.000</div>
+                    <p class="product-desc">
+                        Varian moka favorit dalam paket isi 10 pcs dengan tekstur roti lembut dan topping melimpah.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">☕🧈🍩</div>
+                    <div class="product-name">Mix (Isi 10)</div>
+                    <div class="product-price">Rp 45.000</div>
+                    <p class="product-desc">
+                        Aroma moka khas berpadu sempurna dengan butiran meses Ceres, isi 5 pcs dalam satu paket.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="pesan">
+            <h2>Pesan Sekarang!</h2>
+            <div class="order-form">
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="nama">Nama </label>
+                        <input type="text" id="nama" required placeholder="Masukkan nama Anda">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nohp">Nomor HP / WhatsApp </label>
+                        <input type="tel" id="nohp" required placeholder="Contoh: 08xxxxxxxx">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alamat">Alamat Lengkap </label>
+                        <textarea id="alamat" required
+                            placeholder="Masukkan alamat lengkap untuk order/pengiriman"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="varian">Pilih Varian Donat *</label>
+                        <select id="varian" required>
+                            <option value="">-- Pilih Varian --</option>
+                            <option value="Paha Ayam Cokelat Ceres isi 5 - Rp 25.000">Paha Ayam Cokelat Ceres isi 5 - Rp
+                                25.000</option>
+                            <option value="Paha Ayam Butter Ceres isi 5 - Rp 25.000">Paha Ayam Butter Ceres isi 5 - Rp
+                                25.000</option>
+                            <option value="Paha Ayam Mocca Ceres isi 5 - Rp 25.000">Paha Ayam Mocca Ceres isi 5 - Rp
+                                25.000</option>
+                            <option value="Paha Ayam Mix isi 5 - Rp 25.000">Paha Ayam Mix isi 5 - Rp 25.000</option>
+                            <option value="Paha Ayam Cokelat Ceres isi 10 - Rp 45.000">Paha Ayam Cokelat Ceres isi 10 -
+                                Rp 45.000</option>
+                            <option value="Paha Ayam Butter Ceres isi 10 - Rp 45.000">Paha Ayam Butter Ceres isi 10 - Rp
+                                45.000</option>
+                            <option value="Paha Ayam Mocca Ceres isi 10 - Rp 45.000">Paha Ayam Mocca Ceres isi 10 - Rp
+                                45.000</option>
+                            <option value="Paha Ayam Mix isi 10 - Rp 45.000">Paha Ayam Mix isi 10 - Rp 45.000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah *</label>
+                        <input type="number" id="jumlah" required min="1" value="1" placeholder="Jumlah donat">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="catatan">Catatan Tambahan (Opsional)</label>
+                        <textarea id="catatan" placeholder="Catatan khusus untuk pesanan Anda"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-order">
+                        🌸 Pesan via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="kontak">
+            <h2>Hubungi Kami</h2>
+            <div class="contact-info">
+                <p><strong>📱 WhatsApp:</strong> <span id="displayWA">085834133842</span></p>
+                <p><strong>📷 Instagram:</strong> @cookingwithchii_</p>
+                <p><strong>🕐 Jam Operasional:</strong> Senin s/d Jum'at 09.00 - 17.00 WIB, Sabtu s/d Minggu 09.00 -
+                    15.00</p>
+                <p style="margin-top: 1rem; font-style: italic;">❤️ Terima kasih telah memilih Makanan di
+                    cookingwithchii!</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 cookingwithchii by: R.FAN Startapp. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem;">Dibuat dengan ❤️ dan sentuhan Resep Spesial Raden Adisti</p>
+    </footer>
+
+    <script>
+        // PENTING: Ganti nomor WhatsApp di bawah ini dengan nomor WA Anda
+        const nomorWhatsApp = '6285834133842'; // Format: 62 + nomor tanpa 0 di depan
+
+        // Tampilkan nomor WA di halaman
+        document.getElementById('displayWA').textContent = nomorWhatsApp.replace('62', '0');
+
+        document.getElementById('orderForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value;
+            const nohp = document.getElementById('nohp').value;
+            const alamat = document.getElementById('alamat').value;
+            const varian = document.getElementById('varian').value;
+            const jumlah = document.getElementById('jumlah').value;
+            const catatan = document.getElementById('catatan').value;
+
+            // Validasi form
+            if (!nama || !nohp || !alamat || !varian || !jumlah) {
+                alert('Mohon lengkapi semua field yang wajib diisi!');
+                return;
+            }
+
+            // Format pesan WhatsApp
+            let pesanWA = `🌸 *PESANAN COOKINGWITHCHII* 🌸\n\n`;
+            pesanWA += `*Nama:* ${nama}\n`;
+            pesanWA += `*No HP:* ${nohp}\n`;
+            pesanWA += `*Alamat:* ${alamat}\n\n`;
+            pesanWA += `*Pesanan:*\n`;
+            pesanWA += `- Varian: ${varian}\n`;
+            pesanWA += `- Jumlah: ${jumlah} pcs\n`;
+
+            if (catatan) {
+                pesanWA += `\n*Catatan:* ${catatan}\n`;
+            }
+
+            pesanWA += `\n_Terima kasih telah memesan di cookingwithchii!_ ❤️`;
+
+            // Encode pesan untuk URL
+            const pesanEncoded = encodeURIComponent(pesanWA);
+
+            // Buka WhatsApp
+            const urlWA = `https://wa.me/6285834133842?text=${pesanEncoded}`;
+            window.open(urlWA, '_blank');
+
+            // Reset form
+            this.reset();
+        });
+
+        // Smooth scroll untuk navigasi
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>
